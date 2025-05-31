@@ -1,5 +1,5 @@
 # Data Scientist Agent
-Our data scientist agent has three function: visualize data, complete machine learning project and solve simple math problems.
+Our data scientist agent can do everything that a true data scientist can do as long as you write the correct prompt.
 
 ## setup environment
 ```bash
@@ -24,15 +24,18 @@ change the api_key into your own
 ## let's start 
 Ensure working directory is root of the repository.
 
-for data visualization:
-```bash
-python data_visualization.py 'your own requirement'
-```
-for machine learning task:
 ```bash
 python machine_learning.py 'your own requirement'
 ```
-for solve math problems:
+if you want our agent solve your problems with tools:
 ```bash
-python solve_math_problems.py 'your own requirement'
+python machine_learning_with_tools.py 'your own requirement'
 ```
+
+
+There is two react modes of our agent: 'plan_and_act', the default one , and 'react'.
+
+And you can set it by using command like:
+```bash
+python machine_learning.py 'your own requirement' react
+python machine_learning_with_tools.py 'your own requirement' react

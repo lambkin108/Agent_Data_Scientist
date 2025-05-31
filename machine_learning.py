@@ -1,14 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+import sys
 import fire
 import os
 from typing import Optional, Dict, Any
 
 from metagpt.roles.di.data_interpreter import DataInterpreter
-
-# Template requirements
-TEMPLATE_REQS = "Run data analysis on sklearn Wine recognition dataset, include a plot, and train a model to predict wine class (20% as validation), and show validation accuracy."
 
 
 async def run_analysis(
@@ -27,21 +24,18 @@ async def run_analysis(
         custom_requirement: Use a completely custom requirement text instead of templates
         show_config: Just show the configuration without running analysis
     """
+    default_requirement = "Run data analysis on sklearn Wine recognition dataset, include a plot, and train a model to predict wine class (20% as validation), and show validation accuracy. And summarize your result."
+    default_react_mode = 'plan_and_act'
     
-    # Generate requirement from template
-    if custom_requirement:
-        requirement = custom_requirement
-    else:
-        requirement = TEMPLATE_REQS
+    # Get requirement from command line arguments
+    requirement = sys.argv[1] if len(sys.argv) > 1 else default_requirement
+    react_mode = sys.argv[2] if len(sys.argv) > 2 else default_react_mode
     
-    # Display configuration if requested
-    if show_config:
-        print("\nGenerated Requirement:")
-        print(requirement)
-        return
-    
-    # Run the DataInterpreter
-    mi = DataInterpreter()
+    # 只在使用默认值时提示
+    if len(sys.argv) <= 1:
+        print(f"No requirement provided. Using default: {default_requirement}")
+
+    mi = DataInterpreter(react_mode=react_mode)
     await mi.run(requirement)
 
 
